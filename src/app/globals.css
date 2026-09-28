@@ -1,26 +1,81 @@
 @import "tailwindcss";
 
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --color-brand-cream: #FFF8F9;
+  --color-brand-brown: #33161E;
+  --color-brand-wine: #6E2637;
+  --color-brand-wine-dark: #581D2B;
+  --color-brand-pink: #E65A78;
+  --color-brand-pink-light: #FDECEF;
+  --color-brand-caramel: #E08722;
+  --color-brand-border: #EED7DC;
+  --color-brand-muted: #6E4D55;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --background: #FFF8F9;
+  --foreground: #33161E;
+  
+  --primary: #6E2637;
+  --primary-foreground: #FFFFFF;
+  --primary-hover: #581D2B;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --secondary: #FDECEF;
+  --secondary-foreground: #6E2637;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --accent: #E65A78;
+  --accent-foreground: #FFFFFF;
+  --accent-light: #FDF2F4;
+
+  --card: #FFFFFF;
+  --card-foreground: #33161E;
+  --card-border: #EED7DC;
+
+  --muted: #F8EBEF;
+  --muted-foreground: #6E4D55;
+
+  --border: #EED7DC;
+  --input: #EED7DC;
+  --ring: #6E2637;
+
+  --radius: 0.75rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FFF8F9;
+  color: #33161E;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, .font-serif-title {
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+}
+
+/* Custom transitions and scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF8F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #EED7DC;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E65A78;
+}
+
+/* Accessibility focus ring */
+:focus-visible {
+  outline: 2px solid #6E2637;
+  outline-offset: 2px;
 }
