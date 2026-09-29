@@ -207,7 +207,7 @@ function OrderTrackerContent() {
                 <span className="font-bold text-[#3B241B] block">Modalidade de Atendimento:</span>
                 <p className="text-[#6E584D]">
                   {currentOrder.fulfillment.type === 'pickup'
-                    ? 'Retirada no Ateliê (Rua das Camélias, 142 — Pinheiros, SP)'
+                    ? 'Retirada no Ateliê (Rua das Camélias, 142 — Ivaiporã, PR)'
                     : `Entrega: ${currentOrder.fulfillment.address?.street}, ${currentOrder.fulfillment.address?.number}`}
                 </p>
                 <p className="text-[#7A263A] font-semibold">

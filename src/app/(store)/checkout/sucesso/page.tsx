@@ -136,7 +136,7 @@ function CheckoutSuccessContent() {
               </span>
               {order.fulfillment.type === 'pickup' ? (
                 <>
-                  <p>Rua das Camélias, 142 — Pinheiros, São Paulo - SP</p>
+                  <p>Rua das Camélias, 142 — Ivaiporã, PR</p>
                   <p className="text-[#7A263A] font-semibold mt-1">Janela: {order.fulfillment.slot}</p>
                 </>
               ) : (

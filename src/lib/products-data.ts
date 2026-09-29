@@ -38,8 +38,8 @@ export const STORE_INFO = {
   whatsappUrl: 'https://wa.me/5543988240581',
   instagram: '@docurasdaangel.oficial',
   instagramUrl: 'https://instagram.com/docurasdaangel.oficial',
-  cityRegion: 'Londrina e Região (PR)',
-  pickupLocation: 'Ateliê Doçuras da Angel — Retirada sob agendamento',
+  cityRegion: 'Ivaiporã e Região (PR)',
+  pickupLocation: 'Ateliê Doçuras da Angel — Retirada sob agendamento em Ivaiporã, PR',
 };
 
 export const CATEGORIES = [

@@ -69,7 +69,7 @@ export default function ProductDetailPage() {
     if (cleanCep.startsWith('01') || cleanCep.startsWith('02') || cleanCep.startsWith('03') || cleanCep.startsWith('04') || cleanCep.startsWith('05')) {
       setCepResult({
         message: 'Região atendida! Entrega local agendada em até 24h após o preparo.',
-        fee: 'R$ 12,00 (ou grátis para retirada no ateliê em Pinheiros)',
+        fee: 'R$ 12,00 (ou grátis para retirada no ateliê em Ivaiporã)',
       });
     } else {
       setCepResult({

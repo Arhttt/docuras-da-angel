@@ -6,13 +6,16 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Check, ShieldCheck, ShoppingBag, MapPin, Clock, CreditCard, QrCode, AlertCircle, ArrowRight } from 'lucide-react';
 import { useCart } from '@/modules/checkout/cart-context';
+import { useAuth } from '@/modules/auth/auth-context';
 import { formatCentsToBrl } from '@/lib/money';
+import { formatPhone, formatCep } from '@/lib/formatters';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, subtotalCents, clearCart, totalItems } = useCart();
+  const { user } = useAuth();
 
   // Form State
   const [fullName, setFullName] = useState('');
@@ -25,8 +28,25 @@ export default function CheckoutPage() {
   const [number, setNumber] = useState('');
   const [complement, setComplement] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
-  const [city, setCity] = useState('São Paulo');
+  const [city, setCity] = useState('Ivaiporã');
   const [selectedSlot, setSelectedSlot] = useState('slot-1');
+
+  // Auto-fill form when user is logged in
+  React.useEffect(() => {
+    if (user) {
+      if (user.name && !fullName) setFullName(user.name);
+      if (user.email && !email) setEmail(user.email);
+      if (user.phone && !phone) setPhone(user.phone);
+      if (user.address) {
+        if (user.address.postalCode && !postalCode) setPostalCode(user.address.postalCode);
+        if (user.address.street && !street) setStreet(user.address.street);
+        if (user.address.number && !number) setNumber(user.address.number);
+        if (user.address.complement && !complement) setComplement(user.address.complement);
+        if (user.address.neighborhood && !neighborhood) setNeighborhood(user.address.neighborhood);
+        if (user.address.city && !city) setCity(user.address.city);
+      }
+    }
+  }, [user]);
 
   const [paymentMethod, setPaymentMethod] = useState<'pix' | 'credit_card'>('pix');
   const [cardNumber, setCardNumber] = useState('');
@@ -163,7 +183,39 @@ export default function CheckoutPage() {
 
       <form onSubmit={handleCompleteOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Left Columns: Form Steps */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-6">
+          {/* Account Status Card */}
+          {user ? (
+            <div className="bg-[#FDECEF] border border-[#EED7DC] rounded-2xl p-4 flex items-center justify-between text-xs">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-[#6E2637] text-white font-bold flex items-center justify-center text-xs">
+                  {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                </div>
+                <div>
+                  <span className="font-bold text-[#33161E] block">Comprando como {user.name}</span>
+                  <span className="text-[#8C6D75]">{user.email}</span>
+                </div>
+              </div>
+              <span className="text-[11px] text-[#6E2637] font-semibold bg-white/70 px-2.5 py-1 rounded-full border border-[#EED7DC]">
+                Dados preenchidos ✓
+              </span>
+            </div>
+          ) : (
+            <div className="bg-white border border-[#EED7DC] rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-xs">
+              <div className="space-y-0.5">
+                <span className="font-bold text-[#33161E] block">Já tem uma conta na Doçuras da Angel?</span>
+                <span className="text-[#6E4D55]">Faça login para carregar seu endereço e dados salvos.</span>
+              </div>
+              <Link
+                href="/login?redirect=/checkout"
+                className="inline-flex items-center justify-center gap-1.5 bg-[#6E2637] hover:bg-[#581D2B] text-white font-bold px-4 py-2 rounded-xl text-xs transition-colors shrink-0"
+              >
+                <span>Fazer Login</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          )}
+
           {/* Step 1: Identification */}
           <section className="bg-white rounded-2xl border border-[#E8D5C4] p-6 space-y-5 shadow-xs">
             <div className="flex items-center gap-3 border-b border-[#F3E7DC] pb-4">
@@ -208,10 +260,11 @@ export default function CheckoutPage() {
                 <Input
                   type="tel"
                   label="WhatsApp / Celular *"
-                  placeholder="(11) 98765-4321"
+                  placeholder="(43) 99999-9999"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => setPhone(formatPhone(e.target.value))}
                   error={errors.phone}
+                  maxLength={15}
                   required
                 />
               </div>
@@ -229,7 +282,7 @@ export default function CheckoutPage() {
                   Forma de Recebimento
                 </h2>
                 <p className="text-xs text-[#7C675B]">
-                  Escolha entre retirada no ateliê em Pinheiros ou entrega agendada.
+                  Escolha entre retirada no ateliê em Ivaiporã ou entrega agendada.
                 </p>
               </div>
             </div>
@@ -254,7 +307,7 @@ export default function CheckoutPage() {
                   </span>
                 </div>
                 <p className="text-xs text-[#7C675B] mt-1.5 leading-relaxed">
-                  Rua das Camélias, 142 — Pinheiros, São Paulo - SP
+                  Rua das Camélias, 142 — Ivaiporã, PR
                 </p>
               </button>
 
@@ -276,7 +329,7 @@ export default function CheckoutPage() {
                   </span>
                 </div>
                 <p className="text-xs text-[#7C675B] mt-1.5 leading-relaxed">
-                  Entrega cuidadosa na capital e região metropolitana por faixa de CEP.
+                  Entrega cuidadosa na cidade de Ivaiporã e região por faixa de CEP.
                 </p>
               </button>
             </div>
@@ -291,9 +344,9 @@ export default function CheckoutPage() {
                   <div>
                     <Input
                       label="CEP *"
-                      placeholder="01310-100"
+                      placeholder="86000-000"
                       value={postalCode}
-                      onChange={(e) => setPostalCode(e.target.value)}
+                      onChange={(e) => setPostalCode(formatCep(e.target.value))}
                       error={errors.postalCode}
                       maxLength={9}
                       required

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { CartProvider } from '@/modules/checkout/cart-context';
+import { AuthProvider } from '@/modules/auth/auth-context';
 import { CartDrawer } from '@/components/store/cart-drawer';
 
 export const metadata: Metadata = {
@@ -26,10 +27,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-[#FFF8F9] text-[#33161E]">
-        <CartProvider>
-          {children}
-          <CartDrawer />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            {children}
+            <CartDrawer />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

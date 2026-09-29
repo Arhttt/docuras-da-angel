@@ -43,7 +43,7 @@ export default function SobrePage() {
               “O doce é a memória mais viva de um abraço em família.”
             </p>
             <p className="text-xs text-[#7C675B] leading-relaxed">
-              Angelina (Angel) começou produzindo balas banhadas para presentear amigos e vizinhos. O aroma de açúcar caramelizado e o carinho impresso em cada unidade transformaram o ateliê no endereço favorito de quem não abre mão do doce de verdade.
+              Angelina (Angel) começou produzindo balas banhadas para presentear amigos e vizinhos em Ivaiporã (PR). O aroma de açúcar caramelizado e o carinho impresso em cada unidade transformaram o ateliê no endereço favorito de quem não abre mão do doce de verdade.
             </p>
           </div>
         </div>
